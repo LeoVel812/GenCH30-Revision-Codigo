@@ -3,19 +3,21 @@
 
 const baseEndpoint = "https://api.github.com";
 const usersEndpoint = `${baseEndpoint}/users`;
-const $n = document.querySelector("name");
-const $b = document.querySelector("#blog");
+const $n = document.querySelector(".name");//agregar selector (.)
+const $b = document.querySelector(".blog");//cambiar selector (# -> .)
 const $l = document.querySelector(".location");
 
 //cambiar a funcion flecha y agregar async
 const displayUser = async (username) => {
   $n.textContent = "cargando...";
   const response = await fetch(`${usersEndpoint}/${username}`);
-  //cambiar data a response
-  console.log(response);
-  $n.textContent = `${response.name}`; //cambiar de "" a ``
-  $b.textContent = `${response.blog}`; //cambiar de "" a ``
-  $l.textContent = `${response.location}`;//cambiar de "" a ``
+  //convertir de Json a objeto para poder ser leido
+  const responseJson = await response.json();
+  //cambiar data a responseJson
+  console.log(responseJson);
+  $n.textContent = `${responseJson.name}`; //cambiar de "" a ``
+  $b.textContent = `${responseJson.blog}`; //cambiar de "" a ``
+  $l.textContent = `${responseJson.location}`;//cambiar de "" a ``
 };
 
 function handleError(err) {
